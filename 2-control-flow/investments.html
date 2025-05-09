@@ -57,7 +57,19 @@
 
         console.log("---------------------")
         console.log("PART 1...")
+        let balance1 = 150000;
+        const target1 = 1000000;
+        const annualRate = 0.08;
+        let years1 = 0;
 
+        while (balance1 < target1) {
+        balance1 *= (1 + annualRate);
+        years1++;
+        }
+
+        console.log("Initial Balance:", formatUSD(150000));
+        console.log("Years Needed:", years1);
+        console.log("Ending Balance:", formatUSD(balance1));
 
 
 
@@ -66,6 +78,23 @@
         console.log("---------------------")
         console.log("PART 2...")
 
+        let balance2 = 150000;
+        const target2 = 1000000;
+        let years2 = 0;
+        const randomNormal = d3.randomNormal(0.08, 0.15); // mean = 8%, stddev = 15%
+        const returnsUsed = [];
+
+        while (balance2 < target2) {
+            const simulatedReturn = randomNormal();
+            returnsUsed.push(simulatedReturn);
+            balance2 *= (1 + simulatedReturn);
+            years2++;
+        }
+
+        console.log("Initial Balance:", formatUSD(150000));
+        console.log("Years Needed (Simulated):", years2);
+        console.log("Ending Balance:", formatUSD(balance2));
+        console.log("Return Rates Used:", returnsUsed.map(r => (r * 100).toFixed(2) + "%").join(", "));
 
 
 
@@ -74,6 +103,30 @@
         console.log("---------------------")
         console.log("PART 3...")
 
+        document.getElementById("run-simulation").addEventListener("click", function () {
+    const initial = parseFloat(document.getElementById("input-initial").value);
+    const target = parseFloat(document.getElementById("input-target").value);
+    const mean = parseFloat(document.getElementById("input-mean").value) / 100;
+    const stddev = parseFloat(document.getElementById("input-stddev").value) / 100;
+
+    if (isNaN(initial) || isNaN(target) || isNaN(mean) || isNaN(stddev)) {
+        document.getElementById("result").textContent = "Please enter valid numbers.";
+        return;
+    }
+
+    let balance = initial;
+    let years = 0;
+    const rand = d3.randomNormal(mean, stddev);
+
+    while (balance < target) {
+        const r = rand();
+        balance *= (1 + r);
+        years++;
+    }
+
+    document.getElementById("result").innerHTML =
+        `It took <strong>${years}</strong> years to grow from ${formatUSD(initial)} to ${formatUSD(balance)}.`;
+});
 
 
 

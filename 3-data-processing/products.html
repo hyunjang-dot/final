@@ -61,6 +61,21 @@
 
         console.log("---------------------")
         console.log("PART 1...")
+        // A. Total number of products
+console.log("A. Total products:", products.length);
+
+// B. Loop through each product and display name and price
+console.log("B. Product details:");
+products.forEach(product => {
+    console.log(`${product.name}: $${product.price.toFixed(2)}`);
+});
+
+// C. Filter products under $50
+const matchingProducts = products.filter(product => product.price < 50);
+console.log("C. Matching products (under $50):", matchingProducts);
+
+// D. Count of matching products
+console.log("D. Number of matching products:", matchingProducts.length);
 
 
 
@@ -69,6 +84,42 @@
 
         console.log("---------------------")
         console.log("PART 2...")
+        const displayDiv = document.getElementById("display-products");
+
+products.forEach(product => {
+    // Create a container div for each product
+    const productDiv = document.createElement("div");
+
+    // Create and append product name
+    const namePara = document.createElement("p");
+    namePara.textContent = `Name: ${product.name}`;
+    productDiv.appendChild(namePara);
+
+    // Create and append product description
+    const descPara = document.createElement("p");
+    descPara.textContent = `Description: ${product.description}`;
+    productDiv.appendChild(descPara);
+
+    // Create and append product price
+    const pricePara = document.createElement("p");
+    pricePara.textContent = `Price: $${product.price.toFixed(2)}`;
+    productDiv.appendChild(pricePara);
+
+    // Create and append image
+    const img = document.createElement("img");
+    img.src = product.imageURL;
+    img.alt = product.name;
+    img.style.width = "360px";
+    img.style.height = "200px";
+    productDiv.appendChild(img);
+
+    // Add a horizontal rule separator
+    const hr = document.createElement("hr");
+    productDiv.appendChild(hr);
+
+    // Append the product-specific div to the main container
+    displayDiv.appendChild(productDiv);
+});
 
 
 

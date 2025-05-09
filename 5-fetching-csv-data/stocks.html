@@ -94,14 +94,36 @@
             console.log("---------------------")
             console.log("PART 1...")
 
+            // D. Number of days
+console.log("D. Number of days:", data.length);
 
+// E. Earliest date and adjusted close
+const earliest = data[data.length - 1]; // CSV is in reverse-chronological order
+const earliestDate = earliest.timestamp;
+const earliestClose = parseFloat(earliest.adjusted_close);
+console.log("E. Earliest Date:", earliestDate);
+console.log("   Adjusted Close:", formatUSD(earliestClose));
+
+// F. Latest date and adjusted close
+const latest = data[0];
+const latestDate = latest.timestamp;
+const latestClose = parseFloat(latest.adjusted_close);
+console.log("F. Latest Date:", latestDate);
+console.log("   Adjusted Close:", formatUSD(latestClose));
+
+// G. Percent change
+const pctChange = (latestClose - earliestClose) / earliestClose;
+console.log("G. Percent Change:", formatPct(pctChange));
 
 
 
             console.log("---------------------")
             console.log("PART 2...")
 
-
+            document.getElementById("display-symbol").textContent = symbol;
+document.getElementById("display-earliest").textContent = `${earliestDate} (${formatUSD(earliestClose)})`;
+document.getElementById("display-latest").textContent = `${latestDate} (${formatUSD(latestClose)})`;
+document.getElementById("display-pct-change").textContent = formatPct(pctChange);
 
 
 

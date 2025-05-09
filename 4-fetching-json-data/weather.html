@@ -90,13 +90,67 @@
                 console.log("---------------------")
                 console.log("PART 1...")
 
+                // A. Fetch already complete — data available
+const periods = data.properties.periods;
 
+// B. Display generation date
+console.log("B. Generated on:", data.properties.generated);
+
+// C. Total number of periods
+console.log("C. Total forecast periods:", periods.length);
+
+// D. Filter daytime periods
+const daytimePeriods = periods.filter(p => p.isDaytime);
+console.log("D. Daytime periods:", daytimePeriods);
+
+// E. Number of daytime periods
+console.log("E. Number of daytime periods:", daytimePeriods.length);
+
+// F. Human-readable forecast per daytime period
+console.log("F. 7-Day Forecast:");
+daytimePeriods.forEach(p => {
+    console.log(`${p.name}: ${p.temperature}${degreeSymbol}${p.temperatureUnit} — ${p.shortForecast || p.detailedForecast}`);
+});
 
 
                 console.log("---------------------")
                 console.log("PART 2...")
 
+                // A. Display generation date on page
+document.getElementById("display-date").textContent = data.properties.generated;
 
+// B. Populate table with daytime forecast
+const table = document.getElementById("display-forecast");
+
+// Header row
+const headerRow = table.insertRow();
+["Period", "Temperature", "Forecast", "Icon"].forEach(text => {
+    const th = document.createElement("th");
+    th.textContent = text;
+    headerRow.appendChild(th);
+});
+
+// Data rows
+daytimePeriods.forEach(p => {
+    const row = table.insertRow();
+
+    // Period name
+    row.insertCell().textContent = p.name;
+
+    // Temperature + unit
+    row.insertCell().textContent = `${p.temperature}${degreeSymbol}${p.temperatureUnit}`;
+
+    // Forecast (short or detailed)
+    row.insertCell().textContent = p.shortForecast || p.detailedForecast;
+
+    // Weather icon
+    const iconCell = row.insertCell();
+    const img = document.createElement("img");
+    img.src = p.icon;
+    img.alt = p.shortForecast;
+    img.style.height = "50px";
+    iconCell.appendChild(img);
+});
 
 
             })

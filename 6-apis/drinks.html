@@ -73,14 +73,40 @@
             console.log("---------------------")
             console.log("PART 1...")
 
+            // C. Number of drinks
+        console.log("C. Number of drinks:", drinks.length);
 
+// D. Loop through and display name and ID
+drinks.forEach(drink => {
+    console.log(`${drink.strDrink} (ID: ${drink.idDrink})`);
+});
 
 
 
             console.log("---------------------")
             console.log("PART 2...")
 
+            // A. Display count in span
+        document.getElementById("display-drinks-count").textContent = drinks.length;
 
+// B. Display each drink in div
+const displayDiv = document.getElementById("display-drinks");
+
+drinks.forEach(drink => {
+    const container = document.createElement("div");
+
+    const namePara = document.createElement("p");
+    namePara.textContent = drink.strDrink;
+
+    const img = document.createElement("img");
+    img.src = drink.strDrinkThumb;
+    img.alt = drink.strDrink;
+    img.style.height = "100px";
+
+    container.appendChild(namePara);
+    container.appendChild(img);
+    displayDiv.appendChild(container);
+});
 
 
         })

@@ -83,7 +83,45 @@
             console.log("---------------------")
             console.log("PART 1...")
 
+            // Convert prices to float for all products
+products.forEach(p => p.price = parseFloat(p.price));
 
+// A. Fetch done
+// B. Number of products
+console.log("B. Total products:", products.length);
+
+// C. Display name and price
+console.log("C. Product list:");
+products.forEach(p => {
+    console.log(`${p.name}: ${formatUSD(p.price)}`);
+});
+
+// D. Unique departments
+const departments = [];
+products.forEach(p => {
+    if (!departments.includes(p.department)) {
+        departments.push(p.department);
+    }
+});
+console.log("D. Departments:", departments);
+
+// E. Number of unique departments
+console.log("E. Number of unique departments:", departments.length);
+
+// F. Display department names in uppercase
+console.log("F. Departments (UPPERCASE):");
+departments.forEach(dep => console.log(dep.toUpperCase()));
+
+// G. Filter for beverages
+const beverages = products.filter(p => p.department === "beverages");
+console.log("G. Beverages:", beverages);
+
+// H. Number of beverage products
+console.log("H. Beverage count:", beverages.length);
+
+// I. Average beverage price
+const beverageAvg = d3.mean(beverages, p => p.price);
+console.log("I. Average beverage price:", formatUSD(beverageAvg));
 
 
 
@@ -92,7 +130,16 @@
             console.log("PART 2...")
 
 
+            // A. Sort products by name
+products.sort((a, b) => a.name.localeCompare(b.name));
 
+// B. Display in <ul>
+const list = document.getElementById("display-groceries");
+products.forEach(p => {
+    const li = document.createElement("li");
+    li.textContent = `${p.name}: ${formatUSD(p.price)}`;
+    list.appendChild(li);
+});
 
 
 

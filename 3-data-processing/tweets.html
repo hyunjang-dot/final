@@ -101,7 +101,18 @@
 
         console.log("---------------------")
         console.log("PART 1...")
+        // A. First tweet's screen name
+console.log("A. First tweet author:", tweets[0].user.screen_name);
 
+// B. Tweets mentioning "@sandwoah"
+const mentions = tweets.filter(t => t.full_text.includes("@sandwoah"));
+console.log("B. Users mentioning @sandwoah:");
+mentions.forEach(t => console.log(t.user.screen_name));
+
+// C. Tweet with the most likes among those that mention "@sandwoah"
+const topMention = d3.max(mentions, t => t.likes_count);
+const topMentionTweet = mentions.find(t => t.likes_count === topMention);
+console.log("C. Most-liked mention of @sandwoah by:", topMentionTweet.user.screen_name);
 
 
 
@@ -109,7 +120,31 @@
 
         console.log("---------------------")
         console.log("PART 2...")
+        
+// A. Sort tweets by likes descending
+tweets.sort((a, b) => b.likes_count - a.likes_count);
 
+// B. Display tweets in table
+const table = document.getElementById("social-feed");
+
+// Add table header
+const headerRow = table.insertRow();
+["Tweet Id", "Tweet Text", "User Screen Name", "User Followers", "Tweet Likes"].forEach(header => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headerRow.appendChild(th);
+});
+
+// Add data rows
+tweets.forEach(tweet => {
+    const row = table.insertRow();
+
+    row.insertCell().textContent = tweet.id;
+    row.insertCell().textContent = tweet.full_text;
+    row.insertCell().textContent = tweet.user.screen_name;
+    row.insertCell().textContent = tweet.user.followers;
+    row.insertCell().textContent = tweet.likes_count;
+});
 
 
 

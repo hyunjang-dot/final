@@ -51,7 +51,18 @@
 
         console.log("---------------------")
         console.log("PART 1...")
+        // Function to calculate the area of a circle
+        function calculateCircleArea(radius) {
+        return Math.PI * Math.pow(radius, 2);
+        }
 
+        // Invoke the function with a radius of 9
+        const radius = 9;
+        const area = calculateCircleArea(radius);
+
+        // Log radius and area
+        console.log("Radius:", radius);
+        console.log("Area:", area);
 
 
 
@@ -59,7 +70,18 @@
         console.log("---------------------")
         console.log("PART 2...")
 
+        // Add event listener to the button
+        document.getElementById("calculate").addEventListener("click", function () {
+        const radiusInput = parseFloat(document.getElementById("input-radius").value);
 
+        if (isNaN(radiusInput) || radiusInput < 0) {
+        document.getElementById("display-area").textContent = "Invalid input";
+        return;
+         }
+
+        const calculatedArea = calculateCircleArea(radiusInput);
+        document.getElementById("display-area").textContent = calculatedArea.toFixed(2); // round to 2 decimals
+        });
 
 
 

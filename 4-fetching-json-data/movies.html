@@ -85,7 +85,24 @@
 
                 console.log("---------------------")
                 console.log("PART 1...")
+                // A. Fetch is already done — `data` is the array of movie objects
 
+// B. Number of movies
+console.log("B. Number of Movies:", data.length);
+
+// C. Titles and years
+console.log("C. Movie Titles and Years:");
+data.forEach(movie => {
+    console.log(`${movie.title} (${movie.year})`);
+});
+
+// D. Highest-rated movie
+const highestRated = data.reduce((best, current) => {
+    return current.rating > best.rating ? current : best;
+}, data[0]);
+
+console.log("D. Highest Rated Movie:", highestRated.title);
+console.log("   Rating:", highestRated.rating);
 
 
 
@@ -94,7 +111,43 @@
                 console.log("---------------------")
                 console.log("PART 2...")
 
+                // A. Populate dropdown
+const selectEl = document.getElementById("select-movie");
+data.forEach(movie => {
+    const option = document.createElement("option");
+    option.value = movie.id; // identifier as value
+    option.textContent = movie.title; // title as label
+    selectEl.appendChild(option);
+});
 
+// B. Define updateMovieInfo function
+function updateMovieInfo() {
+    const selectedId = selectEl.value;
+    const selectedMovie = data.find(movie => movie.id === selectedId);
+
+    if (selectedMovie) {
+        document.getElementById("display-title").textContent = selectedMovie.title;
+        document.getElementById("display-year").textContent = selectedMovie.year;
+        document.getElementById("display-rating").textContent = selectedMovie.rating;
+
+        const imageContainer = document.getElementById("image-container");
+        imageContainer.innerHTML = ""; // clear existing
+        const img = document.createElement("img");
+        img.src = selectedMovie.poster_url;
+        img.alt = selectedMovie.title;
+        img.style.maxWidth = "200px";
+        imageContainer.appendChild(img);
+    } else {
+        // fallback for "N/A"
+        document.getElementById("display-title").textContent = "TODO";
+        document.getElementById("display-year").textContent = "TODO";
+        document.getElementById("display-rating").textContent = "X";
+        document.getElementById("image-container").innerHTML = "";
+    }
+}
+
+// C. Attach event listener to dropdown
+selectEl.addEventListener("change", updateMovieInfo);
 
 
 
